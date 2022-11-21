@@ -2,6 +2,7 @@
 import {useContext, useEffect, useState, useCallback} from 'react';
 import {UserContext} from "../lib/context";
 import debounce from 'lodash.debounce';
+import MetaTags from "../components/Metatags";
 
 
 export default function Enter(props) {
@@ -21,9 +22,14 @@ function SignInButton() {
     };
 
     return ( 
+    <>
         <button className="btn-google" onClick={signInWithGoogle}>
            <img src={'/google.png'} width="30px" /> Sign in with Google
         </button> 
+        <button onClick={() => auth.signInAnonymously()}>
+            Sign in Anonymously
+        </button>
+    </>
     );
 }
 
@@ -48,7 +54,7 @@ function UsernameForm() {
         batch.set(userDoc, { username: formValue, photoURL: user.photoURL, displayName: user.displayName});
         batch.set(usernameDoc, { uid: user.uid});
 
-        await batch .commit();
+        await batch.commit();
 
     };
 
